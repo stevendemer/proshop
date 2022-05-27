@@ -1,25 +1,27 @@
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import AppBar from "@mui/material/AppBar";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
-import LoginIcon from '@mui/icons-material/Login';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-const pages: Array<{ name: string, path: string, icon: React.ReactNode }> = [
+import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
+import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
+import { Icon } from "@mui/material";
+
+const pages: Array<{ name: string, path: string }> = [
     {
         name: 'Cart',
-        path: '/cart',
-        icon: <ShoppingCartIcon />
+        path: '/cart'
     },
     {
         name: 'Signin',
-        path: '/signin',
-        icon: <LoginIcon />
+        path: '/signin'
     }
 ];
 
@@ -27,7 +29,12 @@ const Header = () => {
     return (
         <>
             <AppBar position="static">
-                <Container maxWidth="xl" sx={{ display: 'flex', justify: 'space-between', alignItems: 'center' }}>
+                <Container sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                }}
+                    maxWidth="xl">
                     <Typography
                         variant="h3"
                         noWrap
@@ -42,19 +49,10 @@ const Header = () => {
                     >
                         ProShop
                     </Typography>
-                    <Box
-                        sx={{
-                            flexGrow: 1,
-                            display: { xs: 'none', md: 'flex', justifyContent: 'flex-end', alignItems: 'baseline' },
-                        }}
-                    >
-                        {pages.map((page) => (
-                            <IconButton aria-label="pages" key={page} sx={{ mx: 4, fontSize: 20, display: 'block' }}>
-                                {page.icon}
-                                <Link style={{ color: 'white', textDecoration: "none" }} to={page.path}>{page.name}</Link>
-                            </IconButton>
-                        ))}
-                    </Box>
+                    <Stack direction="row" spacing={3} alignItems="center" justifyContent="flex-end">
+                        <ShoppingCartRoundedIcon color='inherit' /><Link sx={{ color: 'white', fontSize: 25, textDecoration: 'none' }} href="/cart">Cart</Link>
+                        <LoginRoundedIcon color='inherit' /><Link sx={{ color: 'white', fontSize: 25, textDecoration: 'none' }} href="/signin">Sign in</Link>
+                    </Stack>
                 </Container>
             </AppBar>
         </>

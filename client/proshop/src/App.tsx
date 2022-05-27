@@ -4,6 +4,8 @@ import Footer from './components/Footer';
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Homepage from './pages/Homepage';
+import products from 'products';
 
 function App() {
 
@@ -11,7 +13,7 @@ function App() {
     <>
       <Header />
       <main>
-        <Typography variant="h2">Hello world</Typography>
+        <Homepage />
       </main>
       <Footer />
     </>
