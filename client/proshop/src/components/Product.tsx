@@ -7,6 +7,7 @@ import CardActionArea from "@mui/material/CardActionArea";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { CardHeader } from "@mui/material";
+import Rating from './Rating';
 import { IProduct } from '../types';
 import React from "react";
 
@@ -14,14 +15,14 @@ const Product = ({ product }: IProduct) => {
 
     return (
         <>
-            <Card sx={{ display: 'block', m: '55px', p: '25px', borderRadius: '55px', maxWidth: '350px', border: '3px solid black' }}>
-                <Link href={`/product/${product._id}`}>
+            <Card sx={{ display: 'block', m: '3rem', p: '2rem', borderRadius: '55px', maxWidth: '350px', border: '3px solid black' }}>
+                <Link style={{ textDecoration: 'none', color: 'black' }} href={`/product/${product._id}`}>
                     <CardMedia component="img" width="360" height="200" alt="product image" image={`${product.image}`} />
+                    <Typography variant="h5">{product.name}</Typography>
                 </Link>
-                <Typography variant="h5">{product.name}</Typography>
                 <Link href={`/product/${product._id}`} />
                 <CardContent component={'div'}>
-                    <Typography variant='body2'>{product.rating} from {product.numReviews} reviews</Typography>
+                    <Rating value={product.rating} text={`${product.numReviews} reviews`} />
                 </CardContent>
                 <CardContent component={'div'}>
                     <Typography variant='h5'>${product.price}</Typography>

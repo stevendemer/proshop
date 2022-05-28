@@ -1,14 +1,13 @@
+import { useMemo, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
+import Switch from "@mui/material/Switch";
 import AppBar from "@mui/material/AppBar";
 import { NavLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
@@ -26,9 +25,25 @@ const pages: Array<{ name: string, path: string }> = [
 ];
 
 const Header = () => {
+
+    const [checked, setChecked] = useState<boolean>(false);
+    const [darkMode, setDarkMode] = useState(false);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setChecked(e.target.checked);
+    }
+
+    const toggleMode = () => setDarkMode(!darkMode);
+
     return (
         <>
             <AppBar position="static">
+                <Switch
+                    sx={{ color: 'green', backgroundColor: 'yellow' }}
+                    checked={checked}
+                    onChange={handleChange}
+                    inputProps={{ 'aria-label': 'controller' }}
+                />
                 <Container sx={{
                     display: 'flex',
                     alignItems: 'center',
@@ -50,8 +65,8 @@ const Header = () => {
                         ProShop
                     </Typography>
                     <Stack direction="row" spacing={3} alignItems="center" justifyContent="flex-end">
-                        <ShoppingCartRoundedIcon color='inherit' /><Link sx={{ color: 'white', fontSize: 25, textDecoration: 'none' }} href="/cart">Cart</Link>
-                        <LoginRoundedIcon color='inherit' /><Link sx={{ color: 'white', fontSize: 25, textDecoration: 'none' }} href="/signin">Sign in</Link>
+                        <ShoppingCartRoundedIcon color='inherit' /><Button component={Link} style={{ color: 'white', fontSize: 20, textDecoration: 'none' }} to="/cart">Cart</Button>
+                        <LoginRoundedIcon color='inherit' /><Button component={Link} style={{ color: 'white', fontSize: 20, textDecoration: 'none' }} to="/signin">Sign in</Button>
                     </Stack>
                 </Container>
             </AppBar>

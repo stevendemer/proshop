@@ -12,7 +12,7 @@ const Homepage = () => {
     return (
         <Container>
             <Typography fontWeight='bold' sx={{ my: 8, display: 'flex', justifyContent: 'center' }} variant="h2">Latest products</Typography>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            <Grid className="product-listing" container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 {products.map((product) => (
                     <Grid item key={product._id}>
                         <Product product={product} />
