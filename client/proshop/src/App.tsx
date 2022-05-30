@@ -23,25 +23,6 @@ function App() {
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
-  const themeValue = useMemo(
-    () => {
-      createTheme({
-        palette: {
-          mode: darkMode ? "dark" : "light"
-        },
-        typography: {
-          fontFamily: [
-            'Nunito',
-            'sans-serif',
-            'Poppins',
-            'sans-serif'
-          ].join(',')
-        }
-      })
-    },
-    [darkMode]
-  );
-
 
   return (
     <IconContext.Provider value={{ color: '#efcc00', size: '28px' }}>

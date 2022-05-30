@@ -7,9 +7,9 @@ interface IProps {
     text: string;
 };
 
-const Rating = ({ value, text }: IProps) => {
+const MyRating = ({ value, text }: IProps) => {
     return (
-        <>
+        <div style={{ cursor: 'pointer' }}>
             <span>
                 <i>
                     {value >= 1 ? <FaStar /> : value >= 0.5 ? <FaStarHalfAlt /> : <FaStar />}
@@ -38,8 +38,8 @@ const Rating = ({ value, text }: IProps) => {
             <span>
                 {text && <h4>{text}</h4>}
             </span>
-        </>
+        </div>
     );
 }
 
-export default Rating;
+export default MyRating;

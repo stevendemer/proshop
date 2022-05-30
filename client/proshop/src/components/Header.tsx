@@ -37,13 +37,7 @@ const Header = () => {
 
     return (
         <>
-            <AppBar position="static">
-                <Switch
-                    sx={{ color: 'green', backgroundColor: 'yellow' }}
-                    checked={checked}
-                    onChange={handleChange}
-                    inputProps={{ 'aria-label': 'controller' }}
-                />
+            <AppBar position="sticky">
                 <Container sx={{
                     display: 'flex',
                     alignItems: 'center',
