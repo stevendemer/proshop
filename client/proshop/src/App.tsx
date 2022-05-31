@@ -17,6 +17,9 @@ import products from 'products';
 import { IconContext } from 'react-icons';
 import { palette } from '@mui/system';
 
+import { Provider } from 'react-redux';
+import { store } from './app/store';
+
 function App() {
 
   const [darkMode, setDarkMode] = useState(false);
@@ -25,20 +28,22 @@ function App() {
 
 
   return (
-    <IconContext.Provider value={{ color: '#efcc00', size: '28px' }}>
-      <Router>
-        <Header />
-        <main>
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/product/:productId" element={<ProductPage />} />
-            <Route path="/" element={<Homepage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </Router>
-    </IconContext.Provider>
-  )
+    <Provider store={store}>
+      <IconContext.Provider value={{ color: '#efcc00', size: '28px' }}>
+        <Router>
+          <Header />
+          <main>
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/product/:productId" element={<ProductPage />} />
+              <Route path="/" element={<Homepage />} />
+            </Routes>
+          </main>
+          <Footer />
+        </Router>
+      </IconContext.Provider>
+    </Provider>
+  );
 }
 
 export default App

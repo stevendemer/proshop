@@ -1,13 +1,32 @@
+import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
 import Typography from '@mui/material/Typography';
 import Product from '../components/Product';
-import products from '../products';
 import { IProduct } from "types";
+import axios from "axios";
 
+const baseURL = "http://localhost:5000/api/products";
 
 const Homepage = () => {
+
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const { data } = await axios.get(baseURL);
+                setProducts(data);
+            } catch (error) {
+                alert(error);
+            }
+        }
+        fetchProducts();
+    }, []);
+
+    // console.log(products);
+
 
     return (
         <Container>
