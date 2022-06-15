@@ -24,16 +24,14 @@ const pages: Array<{ name: string, path: string }> = [
     }
 ];
 
-const Header = () => {
+const Header = ({ toggleDark, darkMode }: any) => {
 
     const [checked, setChecked] = useState<boolean>(false);
-    const [darkMode, setDarkMode] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setChecked(e.target.checked);
     }
 
-    const toggleMode = () => setDarkMode(!darkMode);
 
     return (
         <>
@@ -54,11 +52,13 @@ const Header = () => {
                             py: 3,
                             letterSpacing: '.3rem',
                             textDecoration: 'none',
+                            display: { xs: 'inline-flex' }
                         }}
                     >
                         ProShop
                     </Typography>
-                    <Stack direction="row" spacing={3} alignItems="center" justifyContent="flex-end">
+                    <Switch checked={darkMode} onChange={toggleDark} />
+                    <Stack sx={{ display: { xs: 'none', md: 'flex' } }} direction="row" spacing={3} alignItems="center" justifyContent="flex-end">
                         <ShoppingCartRoundedIcon color='inherit' /><Button component={Link} style={{ color: 'white', fontSize: 20, textDecoration: 'none' }} to="/cart">Cart</Button>
                         <LoginRoundedIcon color='inherit' /><Button component={Link} style={{ color: 'white', fontSize: 20, textDecoration: 'none' }} to="/signin">Sign in</Button>
                     </Stack>

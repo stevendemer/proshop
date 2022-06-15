@@ -9,14 +9,15 @@ import Typography from "@mui/material/Typography";
 import { CardHeader } from "@mui/material";
 import Rating from './Rating';
 import { IProduct } from '../types';
+import { indigo, cyan, deepOrange, lightBlue } from '@mui/material/colors';
 import React from "react";
 
-const Product = ({ product }: IProduct) => {
+const Product = ({ product }: IProduct | string) => {
 
     return (
         <>
-            <Card sx={{ display: 'block', m: '3rem', p: '2rem', borderRadius: '55px', maxWidth: '350px', border: '3px solid black' }}>
-                <Link style={{ textDecoration: 'none', color: 'black' }} href={`/product/${product._id}`}>
+            <Card sx={{ display: 'block', m: '3rem', p: '2rem', maxWidth: '300px', backgroundColor: lightBlue[600], borderRadius: '25px' }}>
+                <Link style={{ textDecoration: 'none', color: 'white' }} href={`/product/${product._id}`}>
                     <CardMedia component="img" width="360" height="200" alt="product image" image={`${product.image}`} />
                     <Typography variant="h5">{product.name}</Typography>
                 </Link>
@@ -27,7 +28,7 @@ const Product = ({ product }: IProduct) => {
                 <CardContent component={'div'}>
                     <Typography variant='h5'>${product.price}</Typography>
                 </CardContent>
-            </Card>
+            </Card >
         </>
     );
 }
