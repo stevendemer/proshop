@@ -36,7 +36,7 @@ const Homepage = () => {
     return (
         data ? (
             <Container>
-                <Typography fontWeight='400' sx={{ my: 3, display: 'flex', color: indigo[700], justifyContent: 'center' }} variant="h2">Latest products</Typography>
+                <Typography fontWeight='400' sx={{ my: 3, display: 'flex', color: blue[600], justifyContent: 'center' }} variant="h2">New Arrivals</Typography>
                 <Grid className="product-listing" container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 5 }}>
                     {data.map((product: IProduct) => (
                         <Grid item key={product._id}>

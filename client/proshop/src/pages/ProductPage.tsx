@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Route, useSearchParams, useNavigate, useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { orange, cyan, teal, lime, blue, indigo, purple, deepOrange, deepPurple, red } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import { useGetProductIDQuery } from '../features/services/productsAPI';
-import { Box, Container, Grid, Stack, Button, Typography, Paper } from '@mui/material';
+import { Box, Container, Grid, Stack, Card, CardContent, CardMedia, Button, Typography, Paper } from '@mui/material';
 import Spinner from '../components/Spinner';
-import { IProduct } from '../types';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { store } from '../app/store';
 
 import {
     addProduct,
-
 } from '../features/products/cartSlice';
 
-import axios from 'axios';
 
 interface RouteParams {
     slug: string;
@@ -63,7 +60,6 @@ const ProductPage = () => {
     const handleAddToCart = (product: IProduct) => {
         dispatch(addProduct(product));
     }
-
 
     return (
         product ? (
@@ -133,4 +129,4 @@ const ProductPage = () => {
     );
 }
 
-export default ProductPage
+export default ProductPage;

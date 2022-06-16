@@ -6,13 +6,12 @@ import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import { CardHeader } from "@mui/material";
 import Rating from './Rating';
-import { IProduct } from '../types';
 import { indigo, cyan, deepOrange, lightBlue } from '@mui/material/colors';
 import React from "react";
 
 const Product = ({ product }: IProduct | string) => {
+
 
     return (
         <>

@@ -34,7 +34,7 @@ const cartSlice = createSlice({
                     ...state.products[productIndex],
                     cartQuantity: state.products[productIndex].cartQuantity + 1,
                 };
-                toast.success("Increased product quantity by 1 !", {
+                toast.success(`Increased quantity to ${state.products[productIndex].cartQuantity}`, {
                     position: "bottom-center"
                 });
             } else {
@@ -44,7 +44,9 @@ const cartSlice = createSlice({
                     position: "bottom-left"
                 });
             }
+            state.cartTotalQuantity++;
             localStorage.setItem("products", JSON.stringify(state.products));
+            console.log(state.cartTotalQuantity);
         },
         decreaseCart(state, action) {
             const itemIndex = state.products.findIndex(
