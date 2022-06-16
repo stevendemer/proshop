@@ -1,15 +1,14 @@
 import { createSlice, PayloadAction, nanoid } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { IProduct } from '../../types';
 
-interface ProductsState {
+interface CartState {
     products: IProduct[],
     cartTotalQuantity: number,
     cartTotalAmount: number,
     loading: 'idle' | 'loading' | 'succeeded' | 'failed'
 };
 
-const initialState: ProductsState = {
+const initialState: CartState = {
     products: (
         localStorage.getItem("products") ?
             JSON.parse(localStorage.getItem("products")!) // the value can never be null
@@ -48,25 +47,28 @@ const cartSlice = createSlice({
             localStorage.setItem("products", JSON.stringify(state.products));
         },
         decreaseCart(state, action) {
-            const itemIndex = state.products.findindex(
-                (item) => item._id === action.payload._id
+            const itemIndex = state.products.findIndex(
+                (item: IProduct) => item._id === action.payload._id
             );
-            if (state.products[itemIndex].cartQuantity > 1) {
-                state.products[itemIndex].cartQuantity -= 1;
-                toast.info("Decreased product quantity !", {
-                    position: "bottom-left"
-                });
-            } else if (state.products[itemIndex].cartQuantity === 1) {
-                const nextCartItem = state.products.filter(
-                    (item) => item._id !== action.payload._id
-                );
-                state.products = nextCartItem;
+            // the product is already in the cart
+            if (itemIndex > 0) {
+                if (state.products[itemIndex].cartQuantity > 1) {
+                    state.products[itemIndex].cartQuantity -= 1;
+                    toast.info("Decreased product quantity !", {
+                        position: "bottom-left"
+                    });
+                } else if (state.products[itemIndex].cartQuantity === 1) {
+                    const nextCartItem = state.products.filter(
+                        (item) => item._id !== action.payload._id
+                    );
+                    state.products = nextCartItem;
 
-                toast.error("Product removed from cart !", {
-                    position: "bottom-left"
-                });
+                    toast.error("Product removed from cart !", {
+                        position: "bottom-left"
+                    });
+                }
             }
-
+            // the product does not exist in the cart
             localStorage.setItem("products", JSON.stringify(state.products));
         },
         removeProductFromCart(state, action) {

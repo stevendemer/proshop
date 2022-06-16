@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IProduct } from '../../types';
 
 interface ProductResponse<T> {
     page: number;

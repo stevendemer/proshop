@@ -8,7 +8,7 @@ const delayMiddleware = store => next => action => {
     console.log("Middleware triggered: ", action);
     setTimeout(() => {
         next(action);
-    }, 1000);
+    }, 1200);
 }
 
 export const store = configureStore({

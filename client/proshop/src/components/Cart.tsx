@@ -13,7 +13,6 @@ import {
     getTotals,
 
 } from '../features/products/cartSlice';
-import { IProduct } from '../types';
 
 
 const Cart = () => {
@@ -30,7 +29,7 @@ const Cart = () => {
     }
 
     const handleRemoveFromCart = (product: IProduct) => {
-        dispatch(removeProduct(product));
+        dispatch(removeProductFromCart(product));
     }
 
     const handleClearCart = () => {
@@ -39,14 +38,16 @@ const Cart = () => {
 
 
     return (
-        <>
+        <Container sx={{
+            my: '120px',
+        }}>
             <h2>Shopping Cart</h2>
-            {cart.products.length === 0 && <div>The shopping cart is empty !</div>}
+            {cart.products.length === 0 && <h3>The shopping cart is empty !</h3>}
             {cart.products.map((item) => (
                 <div key={item._id}>The name is {item.name} and the price is {item.price} !</div>
             ))}
             <Button onClick={() => handleClearCart()}>Clear shopping cart</Button>
-        </>
+        </Container>
     );
 }
 

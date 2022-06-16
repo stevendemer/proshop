@@ -1,7 +1,9 @@
-import React from "react";
 
-export interface IProduct {
-    product: {
+export { };
+
+declare global {
+
+    interface IProduct {
         _id: string;
         name: string;
         image: string;
@@ -13,7 +15,7 @@ export interface IProduct {
         countInStock: number;
         numReviews: number;
         added?: boolean;
-        cartQuantity?: number
-    }
-};
+        cartQuantity: number;
+    };
+}
 
