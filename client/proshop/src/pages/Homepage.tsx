@@ -1,44 +1,54 @@
 import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
+import Button from '@mui/material/Button';
 import Container from "@mui/material/Container";
 import Typography from '@mui/material/Typography';
 import Product from '../components/Product';
 import { IProduct } from "types";
 import axios from "axios";
+import { cyan, indigo, red, blue } from '@mui/material/colors';
+import Spinner from "../components/Spinner";
+import ProductCard from '../components/ProductCard';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 
-const baseURL = "http://localhost:5000/api/products";
+import { toast } from 'react-toastify';
+
+import { useGetAllProductsQuery, useGetProductIDQuery } from '../features/services/productsAPI';
 
 const Homepage = () => {
 
     const [products, setProducts] = useState([]);
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const { data } = await axios.get(baseURL);
-                setProducts(data);
-            } catch (error) {
-                alert(error);
-            }
-        }
-        fetchProducts();
-    }, []);
+    const { data, error, isLoading } = useGetAllProductsQuery();
 
-    // console.log(products);
+    const notify = () => {
+        toast("Hello Geeks", { position: toast.POSITION.BOTTOM_CENTER });
+    }
 
+    if (isLoading) {
+        return <Spinner />
+    }
+
+    if (data) {
+        console.log(data);
+    }
 
     return (
-        <Container>
-            <Typography fontWeight='bold' sx={{ my: 8, display: 'flex', justifyContent: 'center' }} variant="h2">Latest products</Typography>
-            <Grid className="product-listing" container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                {products.map((product) => (
-                    <Grid item key={product._id}>
-                        <Product product={product} />
-                    </Grid>
-                ))}
-            </Grid>
-        </Container>
+        data ? (
+            <Container>
+                <Typography fontWeight='400' sx={{ my: 3, display: 'flex', color: indigo[700], justifyContent: 'center' }} variant="h2">Latest products</Typography>
+                <Grid className="product-listing" container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 5 }}>
+                    {data.map((product: IProduct) => (
+                        <Grid item key={product._id}>
+                            <ProductCard product={product} />
+                        </Grid>
+                    ))}
+                </Grid>
+            </Container>
+        ) :
+            (
+                <div>Error loading products !</div>
+            )
     );
 
 }

@@ -57,7 +57,6 @@ const Header = ({ toggleDark, darkMode }: any) => {
                     >
                         ProShop
                     </Typography>
-                    <Switch checked={darkMode} onChange={toggleDark} />
                     <Stack sx={{ display: { xs: 'none', md: 'flex' } }} direction="row" spacing={3} alignItems="center" justifyContent="flex-end">
                         <ShoppingCartRoundedIcon color='inherit' /><Button component={Link} style={{ color: 'white', fontSize: 20, textDecoration: 'none' }} to="/cart">Cart</Button>
                         <LoginRoundedIcon color='inherit' /><Button component={Link} style={{ color: 'white', fontSize: 20, textDecoration: 'none' }} to="/signin">Sign in</Button>

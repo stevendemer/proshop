@@ -12,7 +12,6 @@ const Spinner = () => {
                 justifyContent: 'center',
             }}>
                 <CircularProgress sx={{
-                    width: '220px',
                     color: cyan[500]
                 }} size={120} />
             </Box>

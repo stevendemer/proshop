@@ -1,3 +1,4 @@
+import React from "react";
 
 export interface IProduct {
     product: {
@@ -11,6 +12,8 @@ export interface IProduct {
         rating: number;
         countInStock: number;
         numReviews: number;
+        added?: boolean;
+        cartQuantity?: number
     }
 };
 

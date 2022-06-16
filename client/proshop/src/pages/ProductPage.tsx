@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Route, useSearchParams, useNavigate, useParams } from "react-router-dom"
-import Container from "@mui/material/Container";
-import Rating from "@mui/material/Rating";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Grid";
-import { orange, teal, lime, blue, indigo, purple, deepOrange, deepPurple, red } from "@mui/material/colors";
+import { orange, cyan, teal, lime, blue, indigo, purple, deepOrange, deepPurple, red } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
+import { useGetProductIDQuery } from '../features/services/productsAPI';
+import { Box, Container, Grid, Stack, Button, Typography, Paper } from '@mui/material';
+import Spinner from '../components/Spinner';
+import { IProduct } from '../types';
 
-import { IProduct } from "types";
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { store } from '../app/store';
+
+import {
+    addProduct,
+
+} from '../features/products/cartSlice';
 
 import axios from 'axios';
 
@@ -28,25 +30,28 @@ const Img = styled('img')({
 
 const ProductPage = () => {
 
-    const [product, setProduct] = useState<IProduct['product']>({});
+    const [product, setProduct] = useState<IProduct['product']>();
     const [inStock, setInStock] = useState(false);
+
+    const dispatch = useAppDispatch();
+
+    const cart = useAppSelector((state) => state.cart);
 
     let { productId } = useParams();
 
-    // const product: IProduct['product'] = products.find((p) => p._id === productId);
+    const { data, error, isLoading } = useGetProductIDQuery(productId);
 
     useEffect(() => {
-
-        const fetchProduct = async () => {
-            const { data } = await axios.get(`http://localhost:5000/api/products/${productId}`);
+        if (data) {
             setProduct(data);
+            console.log(data);
+        } else if (error) {
+            return <div>Error with the product !</div>
         }
 
-        fetchProduct();
-    }, []);
+    }, [data]);
 
-
-    const handleClick = (e: MouseEvent): void => {
+    const handleClick = (e: React.SyntheticEvent): void => {
         if (product.countInStock > 0) {
             console.log("Success ! You bought it ");
         } else {
@@ -55,73 +60,76 @@ const ProductPage = () => {
     }
 
 
+    const handleAddToCart = (product: IProduct) => {
+        dispatch(addProduct(product));
+    }
+
+
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2, backgroundColor: blue[400], width: '100vw', height: '100vh' }} >
-            <Paper
-                sx={{
-                    p: 3,
-                    margin: 'auto',
-                    maxWidth: '550px',
-                    flexGrow: 1,
-                    backgroundColor: 'white',
-                    color: 'black',
-                    borderTopLeftRadius: '45px',
-                    borderTopRightRadius: '45px',
-                    borderBottomLeftRadius: '25px',
-                    borderBottomRightRadius: '25px',
-                }}
-            >
-                <Grid container spacing={3}>
-                    <Grid sx={{ m: '22px' }} item>
-                        <Img alt="product image" src={product.image} />
-                    </Grid>
-                    <Grid container direction="column" item xs={12} sx={{ px: '12px' }}>
-                        <Grid item xs>
-                            <Typography gutterBottom variant="h5" component="div">{product.name}</Typography>
-                            <Typography gutterBottom variant="subtitle1" component="div">{product.description}</Typography>
-                            <Rating sx={{ my: '12px', mx: '8px' }} value={product.rating || 0} readOnly precision={0.5} />
-                            <Typography sx={{ mx: '12px' }} variant="subtitle1">{product.numReviews} reviews</Typography>
+        product ? (
+
+            <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', backgroundColor: blue[400], width: '100vw', height: '100vh' }} >
+                <Paper
+                    sx={{
+                        p: 1,
+                        margin: 'auto',
+                        maxWidth: '550px',
+                        borderTopLeftRadius: '45px',
+                        borderTopRightRadius: '45px',
+                        borderBottomLeftRadius: '45px',
+                        borderBottomRightRadius: '45px',
+                    }}
+                >
+                    <Grid direction="row" container spacing={3}>
+                        <Grid sx={{ m: '12px' }} item>
+                            <Img alt="product image" src={product.image} />
                         </Grid>
                     </Grid>
-                    <Box sx={{ mx: '25px', my: '12px', display: 'flex' }}>
-                        <Button size="small" variant="contained" sx={{
-                            backgroundColor: 'theme.primary.main', color: 'white', mx: '12px',
-                            ':hover': {
-                                backgroundColor: orange[700],
-                                color: 'black'
-                            }
-                        }}>Share</Button>
-                        <Button size="small" sx={{
-                            ':hover': {
-                                backgroundColor: orange[700],
-                                color: 'black'
-                            }
-                        }} variant="contained">Learn more</Button>
-                    </Box>
-                </Grid>
-            </Paper>
-            <Stack spacing={2} sx={{
-                display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '35px', height: '250px', width: 'fit-content', position: 'absolute', right: '25vw', px: '32px', border: '2px solid black',
-                backgroundColor: 'white', color: 'black'
-            }}>
-                <Typography variant="h5" sx={{ width: 'fit-content', cursor: 'pointer' }}>Price: ${product.price}</Typography>
-                <Typography variant="subtitle1" sx={{ width: 'fit-content' }}>Status: {product.countInStock > 0 ? "In stock" : "Out of Stock"}</Typography>
-                <Button
-                    sx={{
-                        backgroundColor: 'black',
-                        color: 'white',
-                        fontSize: '15px',
-                        borderRadius: '55px',
-                        padding: '11px',
-                        ':hover': {
-                            backgroundColor: orange[600],
-                            color: 'white'
-                        }
-                    }}
-                    onClick={handleClick}
-                >ADD TO CART</Button>
-            </Stack>
-        </Box>
+                    <Grid sx={{ display: 'flex' }} item xs>
+                        <Box sx={{ mx: '12px', my: '5px' }}>
+                            <Button size="small" variant="contained" sx={{
+                                backgroundColor: red[600], color: 'white', mx: '12px',
+                                ':hover': {
+                                    backgroundColor: lime[400],
+                                    color: 'black'
+                                }
+                            }}>Share</Button>
+                            <Button size="small" sx={{
+                                background: red[600],
+                                ':hover': {
+                                    backgroundColor: lime[400],
+                                    color: 'black'
+                                }
+                            }} variant="contained">Learn more</Button>
+                        </Box>
+                    </Grid>
+                    <Container>
+                        <Box>
+                            <Typography variant="h5" sx={{ cursor: 'pointer' }}>Price: ${product.price}</Typography>
+                            <Typography variant="subtitle1" sx={{ fontSize: '1.1rem', height: '55px', fontWeight: '700' }}>Status: {product.countInStock > 0 ? "In stock" : "Out of Stock"}</Typography>
+                            <Typography variant="subtitle1">{product.description}</Typography>
+                            <Button
+                                sx={{
+                                    backgroundColor: 'black',
+                                    mx: '-12px',
+                                    my: '45px',
+                                    color: 'white',
+                                    fontSize: '15px',
+                                    borderRadius: '55px',
+                                    padding: '11px',
+                                    ':hover': {
+                                        backgroundColor: orange[600],
+                                        color: 'white'
+                                    }
+                                }}
+                                onClick={() => dispatch(addProduct(product))}>
+                                Add to Cart
+                            </Button>
+                        </Box>
+                    </Container>
+                </Paper>
+            </Box >
+        ) : (isLoading ? <Spinner /> : <h2>Error !</h2>)
     );
 }
 

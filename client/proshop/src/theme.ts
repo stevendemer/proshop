@@ -1,9 +1,16 @@
-import { orange } from "@mui/material/colors";
+import { orange, purple, deepOrange, red, green, cyan, indigo } from "@mui/material/colors";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 let theme = createTheme({
     palette: {
-        // mode: 'dark'
+        mode: 'light',
+        primary: {
+            main: deepOrange[700]
+        },
+        secondary: {
+            main: indigo[400]
+
+        }
     },
     typography: {
         fontFamily: [
