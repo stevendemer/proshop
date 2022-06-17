@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+
 interface ProductResponse<T> {
     page: number;
     per_page: number;
@@ -13,7 +14,7 @@ interface ProductResponse<T> {
 
 export const productsAPI = createApi({
     reducerPath: "productsAPI",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8800/api" }),
     tagTypes: ['Products'],
     endpoints: (builder) => ({
         getAllProducts: builder.query<ProductResponse<IProduct>, void>({

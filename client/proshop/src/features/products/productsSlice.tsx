@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction, nanoid, createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState } from '../../app/store'
 import axios from 'axios';
-import { IProduct } from '../../types';
 
 interface ProductsState {
     products: IProduct[],

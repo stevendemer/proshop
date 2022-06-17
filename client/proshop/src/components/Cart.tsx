@@ -3,9 +3,13 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import toast from 'react-toastify';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Link, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
+// TODO: Add a Go back button when the cart is empty 
 import {
     addProduct,
     removeProductFromCart,
@@ -18,7 +22,9 @@ import {
 const Cart = () => {
 
     const cart = useAppSelector((state) => state.cart);
+    const prod = useAppSelector((state) => state.product);
     const dispatch = useAppDispatch();
+    let navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getTotals());
@@ -36,17 +42,24 @@ const Cart = () => {
         dispatch(clearCart());
     }
 
+    if (cart.products.length === 0) {
+        return (
+            <Container sx={{ my: '5rem', mx: '12rem' }}>
+                <Typography variant="h4">The shopping cart is empty !</Typography>
+                <Button startIcon={<ArrowBackIcon />} sx={{ my: '120px', display: 'flex', justify: 'center' }} variant="contained" onClick={() => navigate("/")}>Go back</Button>
+            </Container>
+        );
+    }
 
     return (
         <Container sx={{
             my: '120px',
         }}>
-            <h2>Shopping Cart</h2>
-            {cart.products.length === 0 && <h3>The shopping cart is empty !</h3>}
+            <Typography variant="h4">You have {cart.cartTotalQuantity} total products in your cart</Typography>
             {cart.products.map((item) => (
-                <div key={item._id}>The name is {item.name} and the price is {item.price} !</div>
+                <Typography variant="h5" key={item._id}>{item.name} - ${item.price}</Typography>
             ))}
-            <Button onClick={() => handleClearCart()}>Clear shopping cart</Button>
+            <Button startIcon={<RemoveShoppingCartIcon />} sx={{ p: '8px', m: '12px' }} variant="contained" size="medium" onClick={() => handleClearCart()}>Empty Cart</Button>
         </Container>
     );
 }

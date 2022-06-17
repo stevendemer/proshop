@@ -49,7 +49,7 @@ const Header = ({ toggleDark, darkMode }: any) => {
                         href="/"
                         sx={{
                             color: 'inherit',
-                            py: 3,
+                            py: 1,
                             letterSpacing: '.3rem',
                             textDecoration: 'none',
                             display: { xs: 'inline-flex' }

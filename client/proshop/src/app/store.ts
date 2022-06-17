@@ -19,7 +19,7 @@ export const store = configureStore({
     },
     // adding the api middleware enables caching, validation, polling 
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(productsAPI.middleware).concat(delayMiddleware)
+        getDefaultMiddleware().concat(productsAPI.middleware)
 });
 
 store.dispatch(productsFetch());

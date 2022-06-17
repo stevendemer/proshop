@@ -39,6 +39,7 @@ const ProductPage = () => {
     const { data, error, isLoading } = useGetProductIDQuery(productId);
 
     useEffect(() => {
+
         if (data) {
             setProduct(data);
             console.log(data);
@@ -64,7 +65,7 @@ const ProductPage = () => {
     return (
         product ? (
 
-            <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', backgroundColor: blue[400], width: '100vw', height: '100vh' }} >
+            <Box sx={{ display: 'flex', justify: 'space-around', align: 'center', background: blue[400], width: '100vw', height: '100vh' }} >
                 <Paper
                     sx={{
                         p: 1,
@@ -85,6 +86,7 @@ const ProductPage = () => {
                         <Box sx={{ mx: '12px', my: '5px' }}>
                             <Button size="small" variant="contained" sx={{
                                 backgroundColor: red[600], color: 'white', mx: '12px',
+                                fontWeight: '550',
                                 ':hover': {
                                     backgroundColor: lime[400],
                                     color: 'black'
@@ -92,6 +94,7 @@ const ProductPage = () => {
                             }}>Share</Button>
                             <Button size="small" sx={{
                                 background: red[600],
+                                fontWeight: '550',
                                 ':hover': {
                                     backgroundColor: lime[400],
                                     color: 'black'
