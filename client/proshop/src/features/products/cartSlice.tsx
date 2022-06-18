@@ -86,10 +86,13 @@ const cartSlice = createSlice({
             }
         },
         removeProductFromCart(state, action: PayloadAction<IProduct>) {
-            const foundItem = state.products.map((item) => item._id === action.payload._id);
-            const foundIndex = state.products.findIndex((item: IProduct) => item._id === action.payload.id);
+            const foundIndex = state.products.findIndex((item: IProduct) => item._id === action.payload._id);
             if (foundIndex >= 0) {
-                state.products.splice(foundIndex, 1);
+                if (state.products[foundIndex].cartQuantity > 1) {
+                    state.products[foundIndex].cartQuantity--;
+                } else if (state.products[foundIndex].cartQuantity === 1) {
+                    state.products.splice(foundIndex, 1);
+                }
                 state.products = [...state.products]; // clone array
                 toast.success("Product removed from cart !", {
                     position: "bottom-center"

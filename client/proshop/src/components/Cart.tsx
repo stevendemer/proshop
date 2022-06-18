@@ -35,9 +35,9 @@ const Cart = () => {
     }
 
 
-    // useEffect(() => {
-    //     dispatch(getTotals());
-    // }, [cart, dispatch]);
+    useEffect(() => {
+        dispatch(getTotals());
+    }, [cart, dispatch]);
 
     const handleAddToCart = (product: IProduct) => {
         dispatch(addProduct(product));
