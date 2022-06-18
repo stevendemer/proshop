@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction, nanoid, createAsyncThunk } from '@reduxjs/toolkit'
-import type { RootState } from '../../app/store'
 import axios from 'axios';
 
-interface ProductsState {
-    products: IProduct[],
-    loading: 'idle' | 'loading' | 'succeeded' | 'failed'
+interface ProductState {
+    product: IProduct | undefined;
+    status: string | undefined;
 };
 
-const initialState: ProductsState = { products: [], loading: 'idle' };
+const initialState: ProductState = { product: undefined, status: undefined };
 
 // fetch all the products from the server
 export const productsFetch = createAsyncThunk(
@@ -15,7 +14,7 @@ export const productsFetch = createAsyncThunk(
     async () => {
         try {
             const response = await axios.get(
-                "http://localhost:5000/api/products"
+                "http://localhost:8800/api/products"
             );
             return response.data;
         } catch (error) {
@@ -30,7 +29,7 @@ export const productFetchID = createAsyncThunk(
     async (productID: string, { rejectWithValue }) => {
         try {
             const response = await axios.get(
-                `http://localhost:5000/api/products/${productID}`
+                `http://localhost:8800/api/products/${productID}`
             );
             return response.data;
         } catch (err) {
@@ -39,31 +38,32 @@ export const productFetchID = createAsyncThunk(
     }
 )
 
-const productsSlice: any = createSlice({
+const productsSlice = createSlice({
     name: 'products',
     initialState,
-    reducers: {},
-    extraReducers: {
-        [productsFetch.pending]: (state: RootState, action: PayloadAction<IProduct>) => {
-            state.loading = "loading"
-        },
-        [productsFetch.fulfilled]: (state: RootState, action: PayloadAction<IProduct>) => {
-            state.products = action.payload;
-            state.loading = "succeeded";
-        },
-        [productsFetch.rejected]: (state: RootState, action: PayloadAction<IProduct>) => {
-            state.loading = "failed";
-        },
-        [productFetchID.pending]: (state: RootState, action: PayloadAction<IProduct>) => {
-            state.loading = "loading"
-        },
-        [productFetchID.fulfilled]: (state: RootState, action: PayloadAction<IProduct>) => {
-            state.products = action.payload;
-            state.loading = "succeeded";
-        },
-        [productFetchID.rejected]: (state: RootState, action: PayloadAction<IProduct>) => {
-            state.loading = "failed";
-        }
+    reducers: {
+    },
+    extraReducers: (builder) => {
+        builder.addCase(productsFetch.pending, (state) => {
+            state.status = "pending"
+        }),
+            builder.addCase(productsFetch.fulfilled, (state, action: PayloadAction<IProduct>) => {
+                state.status = "success"
+                state.product = action.payload;
+            }),
+            builder.addCase(productsFetch.rejected, (state) => {
+                state.status = "rejected"
+            }),
+            builder.addCase(productFetchID.pending, (state) => {
+                state.status = "pending"
+            }),
+            builder.addCase(productFetchID.fulfilled, (state, action: PayloadAction<IProduct>) => {
+                state.status = "success"
+                state.product = action.payload;
+            }),
+            builder.addCase(productFetchID.rejected, (state) => {
+                state.status = "rejected"
+            })
     }
 });
 

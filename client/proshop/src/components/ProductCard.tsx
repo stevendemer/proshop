@@ -51,8 +51,6 @@ const ProductCard = ({ product }: IProduct) => {
             </Paper>
         </Stack >
     );
-
 }
-
 
 export default ProductCard;

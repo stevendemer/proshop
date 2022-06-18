@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Button from '@mui/material/Button';
 import Container from "@mui/material/Container";
 import Typography from '@mui/material/Typography';
-import Product from '../components/Product';
-import { IProduct } from "types";
 import axios from "axios";
 import { cyan, indigo, red, blue } from '@mui/material/colors';
 import Spinner from "../components/Spinner";
@@ -20,10 +18,6 @@ const Homepage = () => {
     const [products, setProducts] = useState([]);
 
     const { data, error, isLoading } = useGetAllProductsQuery();
-
-    const notify = () => {
-        toast("Hello Geeks", { position: toast.POSITION.BOTTOM_CENTER });
-    }
 
     if (isLoading) {
         return <Spinner />
