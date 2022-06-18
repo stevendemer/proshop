@@ -85,7 +85,8 @@ const cartSlice = createSlice({
                 state.cartTotalQuantity--;
             }
         },
-        removeProductFromCart(state, action: PayloadAction<{ id: string }>) {
+        removeProductFromCart(state, action: PayloadAction<IProduct>) {
+            const foundItem = state.products.map((item) => item._id === action.payload._id);
             const foundIndex = state.products.findIndex((item: IProduct) => item._id === action.payload.id);
             if (foundIndex >= 0) {
                 state.products.splice(foundIndex, 1);
@@ -119,6 +120,7 @@ const cartSlice = createSlice({
         },
         clearCart(state) {
             state.products = [];
+            state.cartTotalQuantity = 0;
             localStorage.setItem("products", JSON.stringify(state.products));
             toast.success("Cart cleared", { position: "bottom-left" });
         },

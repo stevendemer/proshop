@@ -23,6 +23,7 @@ export const store = configureStore({
 });
 
 store.dispatch(productsFetch());
+store.dispatch(getTotals());
 
 export type RootState = ReturnType<typeof store.getState>
 

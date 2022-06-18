@@ -43,21 +43,21 @@ const Cart = () => {
         dispatch(addProduct(product));
     }
 
-    const handleRemoveFromCart = (id: string) => {
-        dispatch(removeProductFromCart(id));
+    const handleRemoveFromCart = (product: IProduct) => {
+        dispatch(removeProductFromCart(product));
     }
 
     const handleClearCart = () => {
         dispatch(clearCart());
     }
 
-    const handleDecrementCart = ({ id: string }) => {
-        dispatch(decrementQuantity(id));
-    }
+    // const handleDecrementCart = ({ id: string }) => {
+    //     dispatch(decrementQuantity(id));
+    // }
 
-    const handleIncrementCart = (id: string) => {
-        dispatch(incrementQuantity(id));
-    }
+    // const handleIncrementCart = (id: string) => {
+    //     dispatch(incrementQuantity(id));
+    // }
 
 
     if (cart.products.length === 0) {
